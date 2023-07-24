@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="true">
+
+    <springProperty name = "rootPath" source= "logging.file.path"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- logging Lock 설정여부 (참고: true 로 할 경우 순서대로 log가 출력하도록 보장한다., 하지만 lock 설정을 하므로 wait 발생으로 인해 성능에 영향을 줄 수 있음. -->
+        <prudent>false</prudent>
+        <file>./logs/laos_test.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- gz 로 압축하여 rolling 파일 생성 -->
+            <fileNamePattern>./logs/backup/laos_test.%d{yyyyMMdd}.%i.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 파일 Rolling 기준: 10MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 15일 지난 로그 삭제 -->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%thread] [%logger{100}:%M] - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jdbc" level="off" additivity="true"/>
+    <logger name="jdbc.sqlonly" level="info" additivity="true"/>
+    <logger name="jdbc.sqltiming" level="off" additivity="true"/>
+    <logger name="jdbc.audit" level="off" additivity="true"/>
+    <logger name="jdbc.resultset" level="off" additivity="true"/>
+    <logger name="jdbc.resultsettable" level="debug" additivity="true"/>
+    <logger name="jdbc.connection" level="off" additivity="true"/>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="DEBUG" />
+    </root>
+</configuration>
