@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class TankInputData {
-    private String bassin_cd;
-    private String ms_date;
+    private String basinCd;
+    private String obsDate;
     private String rainfall;
     private String evaporation;
 }

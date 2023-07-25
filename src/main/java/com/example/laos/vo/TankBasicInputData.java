@@ -11,8 +11,10 @@ import java.util.Map;
 @Setter
 @ToString
 public class TankBasicInputData {
-    private String bassin_cd;
-    private String bassin_nm;
+    private String basinCd;
+    private String basinNm;
+    private String basinArea;
+//    BigDecimal
     private String xsi;
     private String xai;
     private String xbi;
@@ -45,8 +47,9 @@ public class TankBasicInputData {
         int width = 10;
 
         // basicData 설정
-        tankInputData.setBassin_cd(basicData.get("bassin_cd"));
-        tankInputData.setBassin_nm(basicData.get("bassin_nm"));
+        tankInputData.setBasinCd(basicData.get("basin_cd"));
+        tankInputData.setBasinNm(basicData.get("basin_nm"));
+        tankInputData.setBasinArea(basicData.get("basin_area"));
         tankInputData.setXsi(basicData.get("xai"));
         tankInputData.setXai(basicData.get("xai"));
         tankInputData.setXbi(basicData.get("xbi"));

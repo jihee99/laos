@@ -3,12 +3,12 @@
 
 <mapper namespace="com.example.laos.common.dao.CommonDao">
 
-	<!-- 소유역 기본정보 조회 -->
-	<select id="selectBassinData" parameterType="String" resultType="hashmap">
+	<!-- 소유역 기본 정보 조회 -->
+	<select id="selectBasinData" parameterType="String" resultType="com.example.laos.vo.TankBasicInputData">
 		SELECT
-			CONCAT('  ', A.BASSIN_CD) AS BASSIN_CD,
-			A.BASSIN_NM,
-			LPAD(A.BASSIN_AREA::TEXT, 10, ' ') AS BASSIN_AREA,
+			CONCAT('  ', A.BASIN_CD) AS BASIN_CD,
+			A.BASIN_NM,
+			LPAD(A.BASIN_AREA::TEXT, 10, ' ') AS BASIN_AREA,
 			LPAD(B.XSI::text, 10, ' ') AS XSI,
 			LPAD(B.XAI::text, 10, ' ') AS XAI,
 			LPAD(B.XBI::text, 10, ' ') AS XBI,
@@ -33,27 +33,27 @@
 			LPAD(B.U1::text, 10, ' ') AS U1,
 			LPAD(B.U2::text, 10, ' ') AS U2
 		FROM
-			BASSIN_CODE A,
+			BASIN_INFO A,
 			INPUT_TANK B
 		--JOIN
-		--    INPUT_TANK_DATA ITD ON IT.BASSIN_CD = ITD.BASSIN_CD
+		--    INPUT_TANK_DATA ITD ON IT.BASIN_CD = ITD.BASIN_CD
 		WHERE
-			A.BASSIN_CD = #{code} AND
-			A.BASSIN_CD = B.BASSIN_CD
+			A.BASIN_CD = #{code} AND
+			A.BASIN_CD = B.BASIN_CD
 	</select>
 
 
-	<!-- 상세 정보 조회 -->
-	<select id="selectTankInputData" parameterType="String" resultType="hashmap">
+	<!-- 일자별 관측 정보 조회 -->
+	<select id="selectTankInputData" parameterType="String" resultType="com.example.laos.vo.TankInputData">
 		SELECT
-			LPAD(MS_DATE::text, 10, ' ') AS MS_DATE,
+			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
 			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
 			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
 		FROM
 			INPUT_TANK_DATA
 		WHERE
-			BASSIN_CD = #{code}
-		ORDER BY MS_DATE
+			BASIN_CD = #{code}
+		ORDER BY OBS_DATE
 		Limit 50
 	</select>
 
