@@ -23,16 +23,16 @@ public class InsertTankData {
             String line;
             boolean startParsing = false;
 
-            String bassin_cd = null;
+            String basin_cd = null;
 
             // PostgreSQL DB 연결
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(DBURL, DBUSER, DBPWD);
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO INPUT_TANK_DATA(bassin_cd, ms_date, rainfall, evaporation) VALUES (?, ?, ?, ?)");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO INPUT_TANK_DATA(basin_cd, ms_date, rainfall, evaporation) VALUES (?, ?, ?, ?)");
             int n = 0;
             while ((line = reader.readLine()) != null) {
                 if(n == 0) {
-                    bassin_cd = line.trim();
+                    basin_cd = line.trim();
                     n = -1;
                 }
 
@@ -52,7 +52,7 @@ public class InsertTankData {
 
 
                     // 데이터 DB에 저장
-                    pstmt.setString(1, bassin_cd);
+                    pstmt.setString(1, basin_cd);
                     pstmt.setString(2, date);
                     pstmt.setDouble(3, value1);
                     pstmt.setDouble(4, value2);

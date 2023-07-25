@@ -1,9 +1,12 @@
 package com.example.laos.common.service;
 
 import com.example.laos.common.dao.CommonDao;
+import com.example.laos.vo.TankBasicInputData;
+import com.example.laos.vo.TankInputData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,23 +19,24 @@ public class CommonServiceImpl implements CommonService {
 
     private final CommonDao commonDao;
 
-    public Map<String, ArrayList<Map<String,String>>> getTankInputData(String code) {
-        ArrayList<Map<String,String>> bassinData = commonDao.selectBassinData(code);
-        ArrayList<Map<String, String>> inputData = commonDao.selectTankInputData(code);
+    @Transactional
+    public Map<String, Object> getTankInputData(String code) {
+        TankBasicInputData basicData = commonDao.selectBasinData(code);
+        ArrayList<TankInputData> inputData = commonDao.selectTankInputData(code);
 
-//        TankInputData data = TankInputData.createTankInputData(bassinData, inputData);
-//        System.out.println(data);
+        log.info("{}", basicData);
+        log.info("{}", inputData);
 
-        Map<String, ArrayList<Map<String,String>>> data = new HashMap<>();
-        data.put("basicData", bassinData);
-        data.put("inputData", inputData);
+        Map<String, Object> result = new HashMap<>();
 
-//        DataToFile(data);
-        System.out.println(data);
-//        return (HashMap) data;
-        return data;
+        result.put("basicData", basicData);
+        result.put("inputData", inputData);
+
+        return result;
 
     }
+
+
 
 //    private void DataToFile(Map<String, Object> data) {
 //        String fileName = "input.txt";
