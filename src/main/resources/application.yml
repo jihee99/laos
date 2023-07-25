@@ -13,7 +13,7 @@ spring:
   thymeleaf:
     cache: false
   devtools:
-    livereload:L
+    livereload:
       enabled: true
 
 mybatis:

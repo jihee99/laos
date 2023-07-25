@@ -34,28 +34,26 @@
 
 (function ($) {
     $('#run-btn').click(function(){
-        const selectedValue = $('#select-bassin').val();
-        console.log(selectedValue);
-
+        const code = $('#select-bassin').val();
         $.ajax({
-            type: 'POST',
-            url: `/run/${selectedValue}`,
-            // dataType: 'json',
-            // contentType: 'application/json',
-            success: (response) => {
-                console.log("a");
-                console.log(response);
-                if (response.RESULT !== 'SUCCESS') {
-                    alert(FAILURE_TXT);
-                }else{
-                    alert(confirmTxt.successTxt);
-                    location.replace('/');
-                }
+            type: 'GET',
+            url: `/download/${code}`,
+            success: function(response) {
+                // 파일 다운로드를 위한 코드
+                const blob = new Blob([response]);
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'input.file';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             },
-            error: (error) => {
-                console.error(error)
+            error: function(error) {
+                console.error(error);
+                alert('파일 다운로드에 실패했습니다.');
             }
         });
+
 
     });
 

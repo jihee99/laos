@@ -1,11 +1,10 @@
 package com.example.laos.common.service;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 public interface CommonService {
 
-
-    List<Map<String, String>> getTankInputData(String code);
+    Map<String, ArrayList<Map<String,String>>> getTankInputData(String code);
 
 }

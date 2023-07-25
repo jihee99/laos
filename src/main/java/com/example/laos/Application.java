@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 
 @SpringBootApplication
-public class laosApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(laosApplication.class);
+        SpringApplication app = new SpringApplication(Application.class);
         app.addListeners(new ApplicationPidFileWriter());
         app.run(args);
     }

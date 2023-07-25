@@ -4,27 +4,57 @@
 <mapper namespace="com.example.laos.common.dao.CommonDao">
 
 	<!-- 소유역 기본정보 조회 -->
-	<select id="selectBassinData2" parameterType="String" resultType="map">
+	<select id="selectBassinData" parameterType="String" resultType="hashmap">
 		SELECT
-			BASSIN_CD,
-			BASSIN_NM,
-			BASSIN_AREA
+			CONCAT('  ', A.BASSIN_CD) AS BASSIN_CD,
+			A.BASSIN_NM,
+			LPAD(A.BASSIN_AREA::TEXT, 10, ' ') AS BASSIN_AREA,
+			LPAD(B.XSI::text, 10, ' ') AS XSI,
+			LPAD(B.XAI::text, 10, ' ') AS XAI,
+			LPAD(B.XBI::text, 10, ' ') AS XBI,
+			LPAD(B.XCI::text, 10, ' ') AS XCI,
+			LPAD(B.XDI::text, 10, ' ') AS XDI,
+			LPAD(B.S1::text, 10, ' ') AS S1,
+			LPAD(B.S2::text, 10, ' ') AS S2,
+			LPAD(B.K1::text, 10, ' ') AS K1,
+			LPAD(B.K2::text, 10, ' ') AS K2,
+			LPAD(B.A2::text, 10, ' ') AS A2,
+			LPAD(B.A1::text, 10, ' ') AS A1,
+			LPAD(B.A0::text, 10, ' ') AS A0,
+			LPAD(B.B1::text, 10, ' ') AS B1,
+			LPAD(B.B0::text, 10, ' ') AS B0,
+			LPAD(B.C1::text, 10, ' ') AS C1,
+			LPAD(B.C0::text, 10, ' ') AS C0,
+			LPAD(B.D1::text, 10, ' ') AS D1,
+			LPAD(B.HA2::text, 10, ' ') AS HA2,
+			LPAD(B.HA1::text, 10, ' ') AS HA1,
+			LPAD(B.HB::text, 10, ' ') AS HB,
+			LPAD(B.HC::text, 10, ' ') AS HC,
+			LPAD(B.U1::text, 10, ' ') AS U1,
+			LPAD(B.U2::text, 10, ' ') AS U2
 		FROM
-			BASSIN_CODE
+			BASSIN_CODE A,
+			INPUT_TANK B
+		--JOIN
+		--    INPUT_TANK_DATA ITD ON IT.BASSIN_CD = ITD.BASSIN_CD
 		WHERE
-			BASSIN_CD = #{code}
+			A.BASSIN_CD = #{code} AND
+			A.BASSIN_CD = B.BASSIN_CD
 	</select>
 
-	<!-- 소유역 기본정보 조회 -->
-	<select id="selectTankBasicInputData" resultType="map">
+
+	<!-- 상세 정보 조회 -->
+	<select id="selectTankInputData" parameterType="String" resultType="hashmap">
 		SELECT
-			BASSIN_CD,
-			BASSIN_NM,
-			BASSIN_AREA
+			LPAD(MS_DATE::text, 10, ' ') AS MS_DATE,
+			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
+			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
 		FROM
-			BASSIN_CODE
+			INPUT_TANK_DATA
 		WHERE
-			BASSIN_CD = 'dc0790'
+			BASSIN_CD = #{code}
+		ORDER BY MS_DATE
+		Limit 50
 	</select>
 
 </mapper>
