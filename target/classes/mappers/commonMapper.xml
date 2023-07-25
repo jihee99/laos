@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.laos.common.dao.CommonDao">
+
+	<!-- 소유역 기본 정보 조회 -->
+	<select id="selectBasinData" parameterType="String" resultType="com.example.laos.vo.TankBasicInputData">
+		SELECT
+			CONCAT('  ', A.BASIN_CD) AS BASIN_CD,
+			A.BASIN_NM,
+			LPAD(A.BASIN_AREA::TEXT, 10, ' ') AS BASIN_AREA,
+			LPAD(B.XSI::text, 10, ' ') AS XSI,
+			LPAD(B.XAI::text, 10, ' ') AS XAI,
+			LPAD(B.XBI::text, 10, ' ') AS XBI,
+			LPAD(B.XCI::text, 10, ' ') AS XCI,
+			LPAD(B.XDI::text, 10, ' ') AS XDI,
+			LPAD(B.S1::text, 10, ' ') AS S1,
+			LPAD(B.S2::text, 10, ' ') AS S2,
+			LPAD(B.K1::text, 10, ' ') AS K1,
+			LPAD(B.K2::text, 10, ' ') AS K2,
+			LPAD(B.A2::text, 10, ' ') AS A2,
+			LPAD(B.A1::text, 10, ' ') AS A1,
+			LPAD(B.A0::text, 10, ' ') AS A0,
+			LPAD(B.B1::text, 10, ' ') AS B1,
+			LPAD(B.B0::text, 10, ' ') AS B0,
+			LPAD(B.C1::text, 10, ' ') AS C1,
+			LPAD(B.C0::text, 10, ' ') AS C0,
+			LPAD(B.D1::text, 10, ' ') AS D1,
+			LPAD(B.HA2::text, 10, ' ') AS HA2,
+			LPAD(B.HA1::text, 10, ' ') AS HA1,
+			LPAD(B.HB::text, 10, ' ') AS HB,
+			LPAD(B.HC::text, 10, ' ') AS HC,
+			LPAD(B.U1::text, 10, ' ') AS U1,
+			LPAD(B.U2::text, 10, ' ') AS U2
+		FROM
+			BASIN_INFO A,
+			INPUT_TANK B
+		--JOIN
+		--    INPUT_TANK_DATA ITD ON IT.BASIN_CD = ITD.BASIN_CD
+		WHERE
+			A.BASIN_CD = #{code} AND
+			A.BASIN_CD = B.BASIN_CD
+	</select>
+
+
+	<!-- 일자별 관측 정보 조회 -->
+	<select id="selectTankInputData" parameterType="String" resultType="com.example.laos.vo.TankInputData">
+		SELECT
+			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
+			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
+			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
+		FROM
+			INPUT_TANK_DATA
+		WHERE
+			BASIN_CD = #{code}
+		ORDER BY OBS_DATE
+		Limit 50
+	</select>
+
+</mapper>
