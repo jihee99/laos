@@ -1,5 +1,7 @@
 package com.example.laos.common.util;
 
+import com.example.laos.vo.TankBasicInputData;
+import com.example.laos.vo.TankInputData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
@@ -9,9 +11,10 @@ import java.util.Map;
 
 @Slf4j
 public class CreateInputDataFile {
-    public static void dataToFile(ArrayList<Map<String, String>> basicData, ArrayList<Map<String, String>> inputData) {
+    public static void dataToFile(TankBasicInputData basicData, ArrayList<TankInputData> inputData) {
         String fileName = "input.file";
-        System.out.println("$");
+
+        // 기본데이터
         try (FileWriter writer = new FileWriter(fileName)) {
             // Write basicData to the file
 
@@ -22,13 +25,15 @@ public class CreateInputDataFile {
                 writer.write(System.lineSeparator());
             }
 
+            
+            // 일자별 데이터
             // Write inputData to the file
-            for (Map<String, String> entry : inputData) {
-                for (Map.Entry<String, String> dataEntry : entry.entrySet()) {
-                    writer.write(dataEntry.getValue());
-                }
-                writer.write(System.lineSeparator());
-            }
+//            for (Map<String, String> entry : inputData) {
+//                for (Map.Entry<String, String> dataEntry : entry.entrySet()) {
+//                    writer.write(dataEntry.getValue());
+//                }
+//                writer.write(System.lineSeparator());
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         }
