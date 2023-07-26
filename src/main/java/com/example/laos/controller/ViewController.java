@@ -2,15 +2,22 @@ package com.example.laos.controller;
 
 import com.example.laos.common.service.CommonService;
 import com.example.laos.common.util.CreateInputDataFile;
+import com.example.laos.vo.TankBasicInputData;
+import com.example.laos.vo.TankInputData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -64,24 +71,24 @@ public class ViewController {
 
         Map<String, Object> data = commonService.getTankInputData(code);
 //        Map<String, ArrayList<Map<String,String>>> data = commonService.getTankInputData(code);
-        CreateInputDataFile.dataToFile(data.get("basicData"), data.get("inputData"));
+        CreateInputDataFile.dataToFile((TankBasicInputData) data.get("basicData"), (ArrayList<TankInputData>) data.get("inputData"));
 
         // 생성한 파일을 읽어서 byte 배열로 변환
         byte[] fileBytes;
-//        try {
-//            fileBytes = Files.readAllBytes(Paths.get("input.txt"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        try {
+            fileBytes = Files.readAllBytes(Paths.get("input.file"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         // 파일 다운로드를 위한 HTTP 응답 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
-        headers.setContentDispositionFormData("attachment", "input.txt");
+        headers.setContentDispositionFormData("attachment", "input.file");
 
-        return null;
-//        return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
+//        return null;
+        return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
     }
 
 }

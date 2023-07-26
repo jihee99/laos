@@ -24,11 +24,7 @@ public class CommonServiceImpl implements CommonService {
         TankBasicInputData basicData = commonDao.selectBasinData(code);
         ArrayList<TankInputData> inputData = commonDao.selectTankInputData(code);
 
-        log.info("{}", basicData);
-        log.info("{}", inputData);
-
         Map<String, Object> result = new HashMap<>();
-
         result.put("basicData", basicData);
         result.put("inputData", inputData);
 
