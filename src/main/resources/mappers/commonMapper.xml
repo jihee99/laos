@@ -7,7 +7,11 @@
 	<select id="selectBasinData" parameterType="String" resultType="com.example.laos.vo.TankBasicInputData">
 		SELECT
 			CONCAT('  ', A.BASIN_CD) AS BASIN_CD,
-			A.BASIN_NM,
+			A.BASIN_NM AS BASIN_NM,
+			TO_CHAR(B.OBS_START, 'MM/DD/YYYY') AS OBS_START,
+			TO_CHAR(B.OBS_END, 'MM/DD/YYYY') AS OBS_END,
+			LPAD(B.VOA::TEXT,10,' ') AS VOA,
+			LPAD(B.VOM::TEXT,10,' ') AS VOM,
 			LPAD(A.BASIN_AREA::TEXT, 10, ' ') AS BASIN_AREA,
 			LPAD(B.XSI::text, 10, ' ') AS XSI,
 			LPAD(B.XAI::text, 10, ' ') AS XAI,
@@ -48,6 +52,7 @@
 		SELECT
 			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
 			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
+			LPAD(VALUE1::text, 10, ' ') AS VALUE1,
 			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
 		FROM
 			INPUT_TANK_DATA

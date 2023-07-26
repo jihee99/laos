@@ -39,14 +39,14 @@
             type: 'GET',
             url: `/download/${code}`,
             success: function(response) {
-                // // 파일 다운로드를 위한 코드
-                // const blob = new Blob([response]);
-                // const link = document.createElement('a');
-                // link.href = URL.createObjectURL(blob);
-                // link.download = 'input.file';
-                // document.body.appendChild(link);
-                // link.click();
-                // document.body.removeChild(link);
+                //파일 다운로드를 위한 코드
+                const blob = new Blob([response]);
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'input.file';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             },
             error: function(error) {
                 console.error(error);
