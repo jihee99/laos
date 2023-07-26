@@ -36,20 +36,24 @@
     $('#run-btn').click(function(){
         const code = $('#select-basin').val();
         $.ajax({
-            type: 'GET',
             url: `/download/${code}`,
+            method: "GET",
+            // xhrFields: {
+            //     responseType: 'blob' // 파일을 binary로 다운로드 받기 위해 responseType을 'blob'으로 설정합니다.
+            // },
             success: function(response) {
                 //파일 다운로드를 위한 코드
                 const blob = new Blob([response]);
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = 'input.file';
+                link.download = 'input';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+
             },
-            error: function(error) {
-                console.error(error);
+            error: function (xhr, status, error) {
+                console.error("Error: " + status);
                 alert('파일 다운로드에 실패했습니다.');
             }
         });

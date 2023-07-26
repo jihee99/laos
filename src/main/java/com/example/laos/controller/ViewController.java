@@ -6,10 +6,7 @@ import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +73,7 @@ public class ViewController {
         // 생성한 파일을 읽어서 byte 배열로 변환
         byte[] fileBytes;
         try {
-            fileBytes = Files.readAllBytes(Paths.get("input.file"));
+            fileBytes = Files.readAllBytes(Paths.get("input"));
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,7 +82,9 @@ public class ViewController {
         // 파일 다운로드를 위한 HTTP 응답 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
-        headers.setContentDispositionFormData("attachment", "input.file");
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("input").build()); // 확장자를 제거합니다.
+
+        headers.setContentDispositionFormData("attachment", "input");
 
 //        return null;
         return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);

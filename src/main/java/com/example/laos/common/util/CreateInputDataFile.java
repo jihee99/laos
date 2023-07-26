@@ -12,13 +12,13 @@ import java.util.ArrayList;
 @Slf4j
 public class CreateInputDataFile {
     public static void dataToFile(TankBasicInputData td, ArrayList<TankInputData> tid) {
-        String fileName = "input.file";
+        String fileName = "input";
         // 기본데이터
         try (FileWriter writer = new FileWriter(fileName)) {
             // Write td to the file
             writer.write(td.getBasinCd() + System.lineSeparator());
             writer.write(td.getBasinNm() + System.lineSeparator());
-            writer.write(String.format("%10s %10s %10s%n", td.getObsStart(), " ", td.getObsEnd()));
+            writer.write(String.format("%10s%10s%10s%n", td.getObsStart(), " ", td.getObsEnd()));
 //            writer.write(td.getObsStart()+"          " + td.getObsEnd() + System.lineSeparator());
             writer.write(td.getVoa() + td.getVom() + System.lineSeparator());
             writer.write(td.getBasinArea() + System.lineSeparator());
@@ -29,7 +29,7 @@ public class CreateInputDataFile {
 
                 String fieldName = field.getName();
                 String fieldValue = String.valueOf(field.get(td));
-
+//                if(fieldValue.equals("0")) fieldValue = "0.0";
                 if (fieldName.equals("xsi") || fieldName.equals("xai")
                     || fieldName.equals("xbi") || fieldName.equals("xci") || fieldName.equals("xdi")
                     || fieldName.equals("s1") || fieldName.equals("s2") || fieldName.equals("k1")
@@ -39,7 +39,7 @@ public class CreateInputDataFile {
                     || fieldName.equals("ha2") || fieldName.equals("ha1") || fieldName.equals("hb")
                     || fieldName.equals("hc") || fieldName.equals("u1") || fieldName.equals("u2")) {
 //                    writer.write(String.format("%15s %s%n", fieldValue, fieldName.toUpperCase()));
-                    writer.write(String.format("%10s %s %10s%n", " ", fieldValue, fieldName.toUpperCase()));
+                    writer.write(String.format("%10s%10s%7s%s%n", " ", fieldValue, " ", fieldName.toUpperCase()));
                 }
             }
 

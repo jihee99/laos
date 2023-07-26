@@ -59,7 +59,6 @@
 		WHERE
 			BASIN_CD = #{code}
 		ORDER BY OBS_DATE
-		Limit 50
 	</select>
 
 </mapper>
