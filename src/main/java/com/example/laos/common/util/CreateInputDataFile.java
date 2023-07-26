@@ -38,7 +38,6 @@ public class CreateInputDataFile {
                     || fieldName.equals("c1") || fieldName.equals("c0") || fieldName.equals("d1")
                     || fieldName.equals("ha2") || fieldName.equals("ha1") || fieldName.equals("hb")
                     || fieldName.equals("hc") || fieldName.equals("u1") || fieldName.equals("u2")) {
-//                    writer.write(String.format("%15s %s%n", fieldValue, fieldName.toUpperCase()));
                     writer.write(String.format("%10s%10s%7s%s%n", " ", fieldValue, " ", fieldName.toUpperCase()));
                 }
             }
