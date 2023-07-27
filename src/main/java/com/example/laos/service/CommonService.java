@@ -1,4 +1,4 @@
-package com.example.laos.common.service;
+package com.example.laos.service;
 
 import java.util.Map;
 

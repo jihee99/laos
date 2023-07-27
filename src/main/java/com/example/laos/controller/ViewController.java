@@ -1,7 +1,7 @@
 package com.example.laos.controller;
 
-import com.example.laos.common.service.CommonService;
-import com.example.laos.common.util.CreateInputDataFile;
+import com.example.laos.service.CommonService;
+import com.example.laos.util.CreateInputDataFile;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import lombok.RequiredArgsConstructor;

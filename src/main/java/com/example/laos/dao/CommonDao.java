@@ -1,4 +1,4 @@
-package com.example.laos.common.dao;
+package com.example.laos.dao;
 
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;

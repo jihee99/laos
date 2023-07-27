@@ -1,4 +1,4 @@
-package com.example.laos.common.util;
+package com.example.laos.util;
 
 import hec.heclib.dss.HecDataManager;
 import hec.heclib.dss.HecDssCatalog;

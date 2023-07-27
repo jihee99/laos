@@ -1,6 +1,6 @@
-package com.example.laos.common.service;
+package com.example.laos.service;
 
-import com.example.laos.common.dao.CommonDao;
+import com.example.laos.dao.CommonDao;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.laos.common.util;
+package com.example.laos.util;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.example.laos.common.util;
+package com.example.laos.util;
 
 import com.example.laos.vo.DSSPathData;
 import hec.heclib.dss.HecDssCatalog;
