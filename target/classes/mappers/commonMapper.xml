@@ -6,7 +6,7 @@
 	<!-- 소유역 기본 정보 조회 -->
 	<select id="selectBasinData" parameterType="String" resultType="com.example.laos.vo.TankBasicInputData">
 		SELECT
-			CONCAT('  ', A.BASIN_CD) AS BASIN_CD,
+			LPAD(A.BASIN_CD, 8, ' ') AS BASIN_CD,
 			A.BASIN_NM AS BASIN_NM,
 			TO_CHAR(B.OBS_START, 'MM/DD/YYYY') AS OBS_START,
 			TO_CHAR(B.OBS_END, 'MM/DD/YYYY') AS OBS_END,
@@ -61,4 +61,16 @@
 		ORDER BY OBS_DATE
 	</select>
 
+	<select id="selectTankInputDataCscal" parameterType="String" resultType="com.example.laos.vo.TankInputData">
+		select
+			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
+			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
+			LPAD(concat(VALUE1,' ')::text, 10, ' ') AS VALUE1,
+			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
+		FROM
+			INPUT_TANK_DATA
+		WHERE
+			BASIN_CD = #{code}
+		ORDER BY OBS_DATE
+	</select>
 </mapper>

@@ -61,4 +61,16 @@
 		ORDER BY OBS_DATE
 	</select>
 
+	<select id="selectTankInputDataCscal" parameterType="String" resultType="com.example.laos.vo.TankInputData">
+		select
+			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
+			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
+			LPAD(concat(VALUE1,' ')::text, 10, ' ') AS VALUE1,
+			LPAD(EVAPORATION::text, 10, ' ') AS EVAPORATION
+		FROM
+			INPUT_TANK_DATA
+		WHERE
+			BASIN_CD = #{code}
+		ORDER BY OBS_DATE
+	</select>
 </mapper>

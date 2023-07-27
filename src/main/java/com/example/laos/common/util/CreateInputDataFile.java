@@ -42,30 +42,6 @@ public class CreateInputDataFile {
                 }
             }
 
-//            Iterable<String> fields = td.iterableFields();
-//            Iterator<String> iterator = fields.iterator();
-
-//            for (Field fields : td.getClass().getDeclaredFields()) {
-//                System.out.println(fields);
-//                for (Map.Entry<String, String> dataEntry : entry.entrySet()) {
-//                    String value = dataEntry.getValue();
-//                    writer.write(value + System.lineSeparator());
-//                }
-//                writer.write(System.lineSeparator());
-//            }
-
-//            Field[] fields = td.getClass().getDeclaredFields();
-//            for(int i=0; i<fields.length; i++){
-//                String fieldName = fields[i].getName();
-//                String fieldValue = String.valueOf(fields[i].get(td));
-//                if(i==0){
-//                    writer.write(fieldValue);
-//                    writer.write(System.lineSeparator());
-//                }
-//
-//            }
-
-            
             // 일자별 데이터
             // Write inputData to the file
             for (TankInputData data : tid) {

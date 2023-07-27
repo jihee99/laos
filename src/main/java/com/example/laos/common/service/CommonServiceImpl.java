@@ -21,8 +21,13 @@ public class CommonServiceImpl implements CommonService {
 
     @Transactional
     public Map<String, Object> getTankInputData(String code) {
+
         TankBasicInputData basicData = commonDao.selectBasinData(code);
-        ArrayList<TankInputData> inputData = commonDao.selectTankInputData(code);
+        ArrayList<TankInputData> inputData;
+
+        if(code.equals("cscal")) inputData = commonDao.selectTankInputDataCscal(code);
+        else inputData = commonDao.selectTankInputData(code);
+//        ArrayList<TankInputData> inputData = commonDao.selectTankInputData(code);
 
         Map<String, Object> result = new HashMap<>();
         result.put("basicData", basicData);

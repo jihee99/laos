@@ -12,4 +12,5 @@ public interface CommonDao {
 //    Map<String, String> selectBasinData(String code);
     TankBasicInputData selectBasinData(String code);
     ArrayList<TankInputData> selectTankInputData(String code);
+    ArrayList<TankInputData> selectTankInputDataCscal(String code);
 }
