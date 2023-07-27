@@ -46,7 +46,7 @@
                 const blob = new Blob([response]);
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = 'input';
+                link.download = code;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);

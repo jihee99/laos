@@ -2,6 +2,7 @@ package com.example.laos.dao;
 
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
+import com.example.laos.vo.TankResultData;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -13,4 +14,8 @@ public interface CommonDao {
     TankBasicInputData selectBasinData(String code);
     ArrayList<TankInputData> selectTankInputData(String code);
     ArrayList<TankInputData> selectTankInputDataCscal(String code);
+
+    void insertTankSimulationResult(ArrayList<TankResultData> arr);
+
+    void insertTnTankBasinResults(TankResultData tn);
 }

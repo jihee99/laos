@@ -61,7 +61,7 @@
 		ORDER BY OBS_DATE
 	</select>
 
-	<select id="selectTankInputDataCscal" parameterType="String" resultType="com.example.laos.vo.TankInputData">
+	<select id="selectTankInputDataCscal" parameterType="String" resultType="TankInputData">
 		select
 			LPAD(OBS_DATE::text, 10, ' ') AS OBS_DATE,
 			LPAD(RAINFALL::text, 10, ' ') AS RAINFALL,
@@ -73,4 +73,77 @@
 			BASIN_CD = #{code}
 		ORDER BY OBS_DATE
 	</select>
+
+	<!-- Define the INSERT statement using <for> loop -->
+	<insert id="insertTankSimulationResult" parameterType="list">
+		INSERT INTO tank_simulation_results (
+			result_id,
+			obs_date,
+			r,
+			qo_cms,
+			qs_cms,
+			qo_mm,
+			qs_mm,
+			xs,
+			xa,
+			xb,
+			xc,
+			xd,
+			q1,
+			q2,
+			q3,
+			q4,
+			et
+		) VALUES
+		<foreach item="item" collection="list" separator=",">
+		(
+			#{item.resultId}::uuid,
+			#{item.obsDate},
+			#{item.r},
+			#{item.qoCms},
+			#{item.qsCms},
+			#{item.qoMm},
+			#{item.qsMm},
+			#{item.xs},
+			#{item.xa},
+			#{item.xb},
+			#{item.xc},
+			#{item.xd},
+			#{item.q1},
+			#{item.q2},
+			#{item.q3},
+			#{item.q4},
+			#{item.et}
+		)
+		</foreach>
+	</insert>
+
+	<insert id="insertTnTankBasinResults" parameterType="TankResultData">
+		INSERT INTO TANK_SIMULATION_BASIN_RESULTS (
+			result_id,
+			sum_rainfall,
+			sum_obs_flow_dpth,
+			sum_comp_flow_dpth,
+			sum_evaporation,
+			runoff_ratio,
+			obs_mean,
+			obs_sdev,
+			sim_mean,
+			sim_sdev
+		) VALUES
+		(
+			#{resultId}::uuid,
+			#{sumRainfall},
+			#{sumObsFlowDpth},
+			#{sumCompFlowDpth},
+			#{sumEvaport},
+			#{runoffRatio},
+			#{obsMean},
+			#{obsSdev},
+			#{simMean},
+			#{simSdev}
+		)
+	</insert>
+
+
 </mapper>

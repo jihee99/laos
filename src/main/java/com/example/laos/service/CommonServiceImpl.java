@@ -3,6 +3,7 @@ package com.example.laos.service;
 import com.example.laos.dao.CommonDao;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
+import com.example.laos.vo.TankResultData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,33 +39,16 @@ public class CommonServiceImpl implements CommonService {
     }
 
 
+    public void insertTankSimulationResults(ArrayList<TankResultData> arr){
+        commonDao.insertTankSimulationResult(arr);
+    }
 
-//    private void DataToFile(Map<String, Object> data) {
-//        String fileName = "input.txt";
-//
-//        try (FileWriter writer = new FileWriter(fileName)) {
-//            // Write basicData to the file
-//            Map<String, String> basicData = (Map<String, String>) data.get("basicData");
-//            for (Map.Entry<String, String> entry : basicData.entrySet()) {
-//                writer.write(entry.getKey() + "=" + entry.getValue() + System.lineSeparator());
-//            }
-//            writer.write(System.lineSeparator());
-//
-//            // Write inputData to the file
-//            List<Map<String, String>> inputData = (List<Map<String, String>>) data.get("inputData");
-//            for (Map<String, String> entry : inputData) {
-//                for (Map.Entry<String, String> inputEntry : entry.entrySet()) {
-//                    writer.write(inputEntry.getKey() + "=" + inputEntry.getValue() + " ");
-//                }
-//                writer.write(System.lineSeparator());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("Data has been written to " + fileName);
-//
-//    }
+    public void insertTnTankBasinResults(TankResultData tn){
+        System.out.println("################");
+        log.info("{}", tn);
+        commonDao.insertTnTankBasinResults(tn);
+    }
+
 
 
 }

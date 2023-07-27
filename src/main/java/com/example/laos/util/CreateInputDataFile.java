@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 @Slf4j
 public class CreateInputDataFile {
-    public static void dataToFile(TankBasicInputData td, ArrayList<TankInputData> tid) {
-        String fileName = "input";
+    public static void dataToFile(String code, TankBasicInputData td, ArrayList<TankInputData> tid) {
+        String fileName = code;
         // 기본데이터
         try (FileWriter writer = new FileWriter(fileName)) {
             // Write td to the file
@@ -58,7 +58,6 @@ public class CreateInputDataFile {
                     if (fieldName.equals("rainfall") || fieldName.equals("value1") || fieldName.equals("evaporation")){
                         writer.write(String.format("%10s", fieldValue));
                     }
-
                     if(fieldName.equals("evaporation")) writer.write(System.lineSeparator());
                 }
             }

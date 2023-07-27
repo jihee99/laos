@@ -63,8 +63,6 @@ public class InsertTankData {
                     String value2 = data[2];
                     String value3 = data[3];
 
-
-
                     // 데이터 DB에 저장
                     pstmt.setString(1, basin_cd);
                     pstmt.setDate(2, date);
