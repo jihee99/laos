@@ -15,7 +15,7 @@ public interface CommonDao {
     ArrayList<TankInputData> selectTankInputData(String code);
     ArrayList<TankInputData> selectTankInputDataCscal(String code);
 
-    void insertTankSimulationResult(ArrayList<TankResultData> arr);
+    void insertTankSimulationResults(ArrayList<TankResultData> arr);
 
     void insertTnTankBasinResults(TankResultData tn);
 }

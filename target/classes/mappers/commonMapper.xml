@@ -75,7 +75,7 @@
 	</select>
 
 	<!-- Define the INSERT statement using <for> loop -->
-	<insert id="insertTankSimulationResult" parameterType="list">
+	<insert id="insertTankSimulationResults" parameterType="list">
 		INSERT INTO tank_simulation_results (
 			result_id,
 			obs_date,

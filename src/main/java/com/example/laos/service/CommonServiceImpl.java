@@ -40,12 +40,11 @@ public class CommonServiceImpl implements CommonService {
 
 
     public void insertTankSimulationResults(ArrayList<TankResultData> arr){
-        commonDao.insertTankSimulationResult(arr);
+        commonDao.insertTankSimulationResults(arr);
     }
 
     public void insertTnTankBasinResults(TankResultData tn){
-        System.out.println("################");
-        log.info("{}", tn);
+
         commonDao.insertTnTankBasinResults(tn);
     }
 
