@@ -6,6 +6,7 @@ import com.example.laos.vo.TankResultData;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Mapper
 public interface CommonDao {
@@ -18,4 +19,6 @@ public interface CommonDao {
     void insertTankSimulationResults(ArrayList<TankResultData> arr);
 
     void insertTnTankBasinResults(TankResultData tn);
+
+    ArrayList<Map<String, String>> selectFardInputDataList();
 }

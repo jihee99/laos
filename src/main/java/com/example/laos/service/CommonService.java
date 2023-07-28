@@ -10,4 +10,7 @@ public interface CommonService {
     Map<String, Object> getTankInputData(String code);
     void insertTankSimulationResults(ArrayList<TankResultData> sim);
     void insertTnTankBasinResults(TankResultData arr);
+
+    ArrayList<Map<String, String>> getFardInputDataList();
+
 }

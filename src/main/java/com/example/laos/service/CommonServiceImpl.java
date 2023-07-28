@@ -48,6 +48,10 @@ public class CommonServiceImpl implements CommonService {
         commonDao.insertTnTankBasinResults(tn);
     }
 
+    @Override
+    public ArrayList<Map<String, String>> getFardInputDataList() {
+        return commonDao.selectFardInputDataList();
+    }
 
 
 }
