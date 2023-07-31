@@ -1,5 +1,6 @@
 package com.example.laos.service;
 
+import com.example.laos.vo.FardInputData;
 import com.example.laos.vo.TankResultData;
 
 import java.util.ArrayList;
@@ -11,6 +12,6 @@ public interface CommonService {
     void insertTankSimulationResults(ArrayList<TankResultData> sim);
     void insertTnTankBasinResults(TankResultData arr);
 
-    ArrayList<Map<String, String>> getFardInputDataList();
+    ArrayList<FardInputData> getFardInputDataList();
 
 }

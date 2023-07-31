@@ -12,6 +12,7 @@ import java.util.ArrayList;
 @Slf4j
 public class CreateInputDataFile {
     public static void dataToFile(String code, TankBasicInputData td, ArrayList<TankInputData> tid) {
+
         String fileName = code;
         // 기본데이터
         try (FileWriter writer = new FileWriter(fileName)) {

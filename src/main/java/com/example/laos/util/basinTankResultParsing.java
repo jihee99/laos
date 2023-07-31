@@ -52,7 +52,7 @@
 //                    break;
 //                }
 //            }
-//            dao.insertTnTankBasinSimulationResults(sim);
+////            dao.insertTnTankBasinSimulationResults(sim);
 //
 //            // sum 시작
 //            TnTankBasinResultsVo ttbrv = new TnTankBasinResultsVo();
@@ -69,7 +69,7 @@
 //            ttbrv.setSimMean(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 2).trim().split("=")[1])));
 //            ttbrv.setSimSdev(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 3).trim().split("=")[1])));
 //
-//            dao.insertTnTankBasinResults(ttbrv); // insert
+////            dao.insertTnTankBasinResults(ttbrv); // insert
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();

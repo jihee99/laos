@@ -145,7 +145,7 @@
 		)
 	</insert>
 
-	<select id="selectFardInputDataList" resultType="list">
+	<select id="selectFardInputDataList" resultType="FardInputData">
 		SELECT
 			SUBSTRING(OBS_DT, 1, 4) AS YR,
 			MAX(S1) AS D01,
@@ -196,6 +196,5 @@
 			YR
 		ORDER BY
 			YR
-
 	</select>
 </mapper>

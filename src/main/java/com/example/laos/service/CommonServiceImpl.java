@@ -1,6 +1,7 @@
 package com.example.laos.service;
 
 import com.example.laos.dao.CommonDao;
+import com.example.laos.vo.FardInputData;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import com.example.laos.vo.TankResultData;
@@ -49,7 +50,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public ArrayList<Map<String, String>> getFardInputDataList() {
+    public ArrayList<FardInputData> getFardInputDataList() {
         return commonDao.selectFardInputDataList();
     }
 
