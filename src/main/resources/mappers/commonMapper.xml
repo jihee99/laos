@@ -145,7 +145,7 @@
 		)
 	</insert>
 
-	<select id="selectFardInputDataList" resultType="FardInputData">
+	<select id="selectFardInputDataList" resultType="hashmap">
 		SELECT
 			SUBSTRING(OBS_DT, 1, 4) AS YR,
 			MAX(S1) AS D01,
@@ -197,4 +197,58 @@
 		ORDER BY
 			YR
 	</select>
+
+
+<!--	<select id="selectFardInputDataListMap" resultType="hashmap">-->
+<!--		SELECT-->
+<!--			SUBSTRING(OBS_DT, 1, 4) AS YR,-->
+<!--			MAX(S1) AS D01,-->
+<!--			MAX(S2) AS D02,-->
+<!--			MAX(S3) AS D03,-->
+<!--			MAX(S4) AS D06,-->
+<!--			MAX(S5) AS D12,-->
+<!--			MAX(S6) AS D18-->
+<!--		FROM-->
+<!--			(-->
+<!--				SELECT-->
+<!--					OBS_DT,-->
+<!--					SUM(D0) AS S1,-->
+<!--					SUM(D0+D1) AS S2,-->
+<!--					SUM(D0+D1+D2) AS S3,-->
+<!--					SUM(D0+D1+D2+D3+D4+D5) AS S4,-->
+<!--					SUM(D0+D1+D2+D3+D4+D5+D6+D7+D8+D9+D10+D11) AS S5,-->
+<!--					SUM(D0+D1+D2+D3+D4+D5+D6+D7+D8+D9+D10+D11+D12+D13+D14+D15+D16+D17) AS S6-->
+<!--				FROM-->
+<!--					(-->
+<!--						SELECT-->
+<!--							OBS_DT,-->
+<!--							RAINFALL AS D0,-->
+<!--							LEAD(RAINFALL, 1, 0) OVER(ORDER BY OBS_DT) D1,-->
+<!--								LEAD(RAINFALL, 2, 0) OVER(ORDER BY OBS_DT) D2,-->
+<!--								LEAD(RAINFALL, 3, 0) OVER(ORDER BY OBS_DT) D3,-->
+<!--								LEAD(RAINFALL, 4, 0) OVER(ORDER BY OBS_DT) D4,-->
+<!--								LEAD(RAINFALL, 5, 0) OVER(ORDER BY OBS_DT) D5,-->
+<!--								LEAD(RAINFALL, 6, 0) OVER(ORDER BY OBS_DT) D6,-->
+<!--								LEAD(RAINFALL, 7, 0) OVER(ORDER BY OBS_DT) D7,-->
+<!--								LEAD(RAINFALL, 8, 0) OVER(ORDER BY OBS_DT) D8,-->
+<!--								LEAD(RAINFALL, 9, 0) OVER(ORDER BY OBS_DT) D9,-->
+<!--								LEAD(RAINFALL, 10, 0) OVER(ORDER BY OBS_DT) D10,-->
+<!--								LEAD(RAINFALL, 11, 0) OVER(ORDER BY OBS_DT) D11,-->
+<!--								LEAD(RAINFALL, 12, 0) OVER(ORDER BY OBS_DT) D12,-->
+<!--								LEAD(RAINFALL, 13, 0) OVER(ORDER BY OBS_DT) D13,-->
+<!--								LEAD(RAINFALL, 14, 0) OVER(ORDER BY OBS_DT) D14,-->
+<!--								LEAD(RAINFALL, 15, 0) OVER(ORDER BY OBS_DT) D15,-->
+<!--								LEAD(RAINFALL, 16, 0) OVER(ORDER BY OBS_DT) D16,-->
+<!--								LEAD(RAINFALL, 17, 0) OVER(ORDER BY OBS_DT) D17-->
+<!--						FROM-->
+<!--							TEMP.OBS_AWS_DD-->
+<!--					) A-->
+<!--				GROUP BY-->
+<!--					OBS_DT-->
+<!--			) B-->
+<!--		GROUP BY-->
+<!--			YR-->
+<!--		ORDER BY-->
+<!--			YR-->
+<!--	</select>-->
 </mapper>

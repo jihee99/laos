@@ -1,12 +1,12 @@
 package com.example.laos.dao;
 
-import com.example.laos.vo.FardInputData;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import com.example.laos.vo.TankResultData;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Mapper
 public interface CommonDao {
@@ -20,5 +20,6 @@ public interface CommonDao {
 
     void insertTnTankBasinResults(TankResultData tn);
 
-    ArrayList<FardInputData> selectFardInputDataList();
+    ArrayList<Map<String, Object>> selectFardInputDataList();
+//    ArrayList<Map<String, String>> selectFardInputDataListMap();
 }
