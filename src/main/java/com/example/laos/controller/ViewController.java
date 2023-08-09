@@ -4,7 +4,6 @@ import com.example.laos.service.CommonService;
 import com.example.laos.util.CreateFardInpfileData;
 import com.example.laos.util.CreateInputDataFile;
 import com.example.laos.util.ReadFardResultData;
-import com.example.laos.vo.FardInputData;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import com.example.laos.vo.TankResultData;
@@ -15,7 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -126,14 +128,13 @@ public class ViewController {
 
     @GetMapping("/fard/run")
     public ResponseEntity<Object> fardInpFileData() throws IOException {
-        ArrayList<FardInputData> list = commonService.getFardInputDataList();
+        ArrayList<Map<String,Object>> list = commonService.getFardInputDataList();
         String fileName = CreateFardInpfileData.createFardInputData(list);
 
         byte[] fileBytes;
         Path path = Paths.get(fileName);
 
         try {
-
             fileBytes = Files.readAllBytes(path);
 //            fileBytes = Files.readAllBytes(Paths.get("D:\\dev_etc\\tank\\"+code));
         } catch (IOException e) {
