@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<!--    <link th:href="@{~/lib/niceadmin/style.css}" rel="stylesheet">-->
+    <link th:href="@{~/css/global.css}" rel="stylesheet">
+    <link th:href="@{~/css/tank.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="m-3">
+        <div>
+            <span class="fw-bold fs-5">Long-Term estimated inflow</span>
+        </div>
+        <div class="rounded border mt-3 p-3" style="left: 371px; top: 152px; width: 900px;  display: flex; align-items: center;">
+            <div class="p-3" style="flex: 2;">
+                <div style="display: inline-block;">
+                    <span class="h6">Dam</span>
+                </div>
+                <div class="w-50" style="display: inline-block;">
+                    <select class="w-100 form-select form-select-sm" id="floatingSelect">
+                        <option value="Nam Ngum 1">Nam Ngum 1</option>
+                        <option value="Nam Ngum 2">Nam Ngum 2</option>
+                        <option value="Nam Ngum 3">Nam Ngum 3</option>
+                        <option value="Nam Ngum 4">Nam Ngum 4</option>
+                        <option value="Nam Ngum 5">Nam Ngum 5</option>
+                        <option value="Nam Leuk">Nam Leuk</option>
+                        <option value="Nam Lik1 ">Nam Lik1</option>
+                        <option value="Nam Lik1/2">Nam Lik1/2</option>
+                        <option value="Nam Mang 3">Nam Mang 3</option>
+                        <option value="Nam Song">Nam Song</option>
+                        <option value="Nam Phay">Nam Phay</option>
+                    </select>
+                </div>
+<!--                <div id="file-box" class="ml-5 mt-3" style="display: inline-block;">-->
+<!--                    <label for="file" class="file-button rounded px-2 py-1" style="background: #999999; color: white; cursor: pointer;">파일찾기</label>-->
+<!--                    <input type="file" id="file" >-->
+<!--                </div>-->
+                <div class="filebox mt-3">
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일">
+                    <label for="file">파일찾기</label>
+                    <input type="file" id="file">
+                </div>
+            </div>
+            <div id="serch-box" style="flex: 1; display: flex; justify-content: flex-end;">
+                <button class="py-4 border" style=" color: #5F5F5F; width: 105px;">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script th:src="@{~/js/tank.js}"></script>
+</body>
+</html>
