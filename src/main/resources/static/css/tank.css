@@ -10,7 +10,7 @@
 
 .filebox label {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 9px 20px;
     color: #5F5F5F;
     vertical-align: middle;
     background-color: #F0F0F0;
@@ -26,6 +26,7 @@
     color: #999999;
     cursor: pointer;
 }
+
 .file-button:hover{
     cursor: pointer;
 }
@@ -36,5 +37,4 @@
     height: 0;
     padding: 0;
     overflow: hidden;
-    border: 0;
 }
