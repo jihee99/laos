@@ -10,17 +10,20 @@
     <link th:href="@{~/css/tank.css}" rel="stylesheet">
 </head>
 <body>
-    <div class="m-3">
+    <div class="m-3 container">
         <div>
             <span class="fw-bold fs-5">Long-Term estimated inflow</span>
         </div>
+<!--        <form name="excelform" enctype="multipart/form-data" method="post" action="/runTank">-->
+<!--        <form name="excelform" enctype="multipart/form-data" method="get">-->
         <div class="rounded border mt-3 p-3" style="left: 371px; top: 152px; width: 900px;  display: flex; align-items: center;">
             <div class="p-3" style="flex: 2;">
+                <form name = "excelform" id="excelform">
                 <div style="display: inline-block;">
                     <span class="h6">Dam</span>
                 </div>
                 <div class="w-50" style="display: inline-block;">
-                    <select class="w-100 form-select form-select-sm" id="floatingSelect">
+                    <select class="w-100 form-select form-select-sm" id="floatingSelect" name="floatingSelect">
                         <option value="Nam Ngum 1">Nam Ngum 1</option>
                         <option value="Nam Ngum 2">Nam Ngum 2</option>
                         <option value="Nam Ngum 3">Nam Ngum 3</option>
@@ -34,20 +37,31 @@
                         <option value="Nam Phay">Nam Phay</option>
                     </select>
                 </div>
-<!--                <div id="file-box" class="ml-5 mt-3" style="display: inline-block;">-->
-<!--                    <label for="file" class="file-button rounded px-2 py-1" style="background: #999999; color: white; cursor: pointer;">파일찾기</label>-->
-<!--                    <input type="file" id="file" >-->
-<!--                </div>-->
+
                 <div class="filebox mt-3">
                     <input class="upload-name" value="첨부파일" placeholder="첨부파일">
                     <label class="border" for="file">파일찾기</label>
-                    <input class="" type="file" id="file">
+                    <input name="file" type="file" id="file">
                 </div>
+                </form>
+
             </div>
             <div id="serch-box" style="flex: 1; display: flex; justify-content: flex-end;">
-                <button class="py-4 border" style=" color: #5F5F5F; width: 105px;">Search</button>
+                <button id="tank-button" class="py-4 border" style=" color: #5F5F5F; width: 105px;">Search</button>
             </div>
         </div>
+        <div class="pt-3">
+            <div id="summary-1"></div>
+        </div>
+
+        <div class="pt-3">
+            <div id="chart-box"></div>
+        </div>
+
+        <div class="pt-3">
+            <div id="summary-2"></div>
+        </div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
