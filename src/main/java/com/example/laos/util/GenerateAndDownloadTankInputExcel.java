@@ -9,6 +9,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class GenerateAndDownloadTankInputExcel {
 
@@ -66,7 +68,6 @@ public class GenerateAndDownloadTankInputExcel {
 //                response.setHeader("Content-Disposition", "attachment; filename=tank_data.xlsx");
 
                 workbook.write(outputStream);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,6 +93,8 @@ public class GenerateAndDownloadTankInputExcel {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            Files.deleteIfExists(Paths.get(excelFilePath));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
