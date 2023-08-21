@@ -2,7 +2,7 @@ package com.example.laos.controller;
 
 import com.example.laos.util.GenerateAndDownloadTankInputExcel;
 import com.example.laos.vo.EstimateInflowVo;
-import com.example.laos.vo.TankResultData;
+import com.example.laos.vo.EstimateSummaryVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +47,7 @@ public class TankController {
 
 
     @PostMapping("/runTank")
-    public String runTank(@RequestBody MultipartFile file) {
+    public EstimateSummaryVo runTank(@RequestBody MultipartFile file) {
 //    public String runTank(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
@@ -122,14 +121,18 @@ public class TankController {
 
                 int procResult = proc.waitFor();
 
+                readEstimateInflowModelResult(fileName);
+
                 if(procResult == 0) { //성공
-                    System.out.println("S");
+                    System.out.println("Model execution successful.");
                 } else {
-                    System.out.println("F");
+                    System.out.println("Model execution failed.");
                 }
 
-                readEstimateInflowModelResult(fileName);
-//
+                // 모델 결과 파일 읽어오기
+                EstimateSummaryVo es = readEstimateInflowModelResult(fileName);
+
+//              안된다고 했음 확인해보기.
 //                // 모델 실행이 완료될 때까지 대기 (필요에 따라 적절한 대기 시간 설정)
 //                if (!proc.waitFor(1, TimeUnit.MINUTES)) {
 //                    // 실행이 1분 안에 완료되지 않으면 timeout 처리
@@ -145,16 +148,18 @@ public class TankController {
 //                    System.out.println("Model execution failed with exit code: " + procResult);
 //                }
 
-                // 결과 파일을 읽어오기
 //                ArrayList<TankResultData> simulationData = readSimulationReport("D:\\dev_etc\\", fileName);
                 // 처리 완료 후 리턴
-                return "success"; // 성공한 경우 success 페이지를 반환하거나 다른 작업 수행
+                return es;
+//                return "success"; // 성공한 경우 success 페이지를 반환하거나 다른 작업 수행
             } catch (Exception e) {
                 e.printStackTrace();
-                return "error"; // 에러 발생 시 error 페이지를 반환하거나 다른 처리 수행
+                return null; // 에러 발생 시 error 페이지를 반환하거나 다른 처리 수행
+//                return "error"; // 에러 발생 시 error 페이지를 반환하거나 다른 처리 수행
             }
         }
-        return "error"; // 업로드된 파일이 없는 경우 에러 처리
+        return null; // 업로드된 파일이 없는 경우 에러 처리
+//        return "error"; // 업로드된 파일이 없는 경우 에러 처리
     }
 
     private List<List<String>> readExcel(InputStream inputStream) throws IOException {
@@ -200,59 +205,59 @@ public class TankController {
     }
 
 
-    public static ArrayList<TankResultData> readEstimateInflowModelResult(String fileName) throws IOException {
+    public static EstimateSummaryVo readEstimateInflowModelResult(String fileName) throws IOException {
+        EstimateSummaryVo es = new EstimateSummaryVo();
         try {
 
             Path path = Paths.get(ResultPath, "tank", fileName+".out");
             List<String> lines = Files.readAllLines(path);
 
             int idx = 25;
-            int cnt = 0;
 
 //            ArrayList<TankResultData> arr = new ArrayList<>();
             ArrayList<EstimateInflowVo> eilist = new ArrayList<>();
             String uuid = UUID.randomUUID().toString();
+            Boolean startParsing = true;
 
-            while (idx < lines.size()) {
+            while (idx< lines.size()) {
                 String[] ls = lines.get(idx).replaceAll("\\s\\s+", "Q").split("Q");
 
-                EstimateInflowVo ei = new EstimateInflowVo();
+                EstimateInflowVo eif = new EstimateInflowVo();
 
-                ei.setDate(ls[0].replaceAll("\\s+", ""));
-                ei.setRMm(ls[1]);
-                ei.setQoCms(ls[2]);
-                ei.setQsCms(ls[3]);
+                eif.setDate(ls[0].replaceAll("\\s+", ""));
+                eif.setRMm(ls[1]);
+                eif.setQoCms(ls[2]);
+                eif.setQsCms(ls[3]);
 
-                System.out.println(ei.toString());
-
-                eilist.add(ei);
-
+                eilist.add(eif);
                 idx++;
-                cnt++;
 
+                if(idx < lines.size() && lines.get(idx).contains("-----")){
+                    idx += 2;
+                    break;
+                }
             }
 
-            TankResultData trd = new TankResultData();
+            es.setRealRainfall(lines.get(idx++).trim().split("=")[1].trim());
+            es.setObservedFlowDept(lines.get(idx++).trim().split("=")[1].trim());
+            es.setComputedFlowDept(lines.get(idx++).trim().split("=")[1].trim());
+            es.setEvapotranspiration(lines.get(idx++).trim().split("=")[1].trim());
+            es.setRatio(lines.get(idx++).trim().split("=")[1].trim());
 
-            trd.setResultId(uuid);
-            trd.setSumRainfall(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx).trim().split("=")[1]))));
-            trd.setSumObsFlowDpth(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 1).trim().split("=")[1]))));
-            trd.setSumCompFlowDpth(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 2).trim().split("=")[1]))));
-            trd.setSumEvaport(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 3).trim().split("=")[1]))));
-            trd.setRunoffRatio(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 4).trim().split("=")[1]))));
+            idx += 26;
+            es.setObsMean(lines.get(idx++).trim().split("=")[1].trim());
+            es.setObsSdev(lines.get(idx++).trim().split("=")[1].trim());
+            es.setSimMean(lines.get(idx++).trim().split("=")[1].trim());
+            es.setSimSdev(lines.get(idx).trim().split("=")[1].trim());
 
-            idx += 31;
-            trd.setObsMean(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx).trim().split("=")[1]))));
-            trd.setObsSdev(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 1).trim().split("=")[1]))));
-            trd.setSimMean(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 2).trim().split("=")[1]))));
-            trd.setSimSdev(String.valueOf(BigDecimal.valueOf(Double.valueOf(lines.get(idx + 3).trim().split("=")[1]))));
+            es.setInflows(eilist);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return es;
     }
 
 }

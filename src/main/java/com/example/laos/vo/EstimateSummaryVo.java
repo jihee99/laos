@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Data
 @Getter
 @Setter
@@ -22,6 +24,6 @@ public class EstimateSummaryVo {
     private String simMean;
     private String simSdev;
 
-    private EstimateInflowVo[] inflows;
+    private ArrayList<EstimateInflowVo> inflows;
 
 }
