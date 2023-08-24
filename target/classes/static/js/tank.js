@@ -3,7 +3,7 @@ const tankResultTable = new Tabulator("#inflowList",{
         height: "100%",
         placeholder: "모델이 실행되지 않았습니다.",
         pagination:"local",
-        paginationSize:30,
+        paginationSize:10,
         paginationSizeSelector:[10,30,50,100],
         columns: [
             {title: "Date", field: "date"},
@@ -16,7 +16,7 @@ const tankMonthlyResultTable = new Tabulator("#inflowMonthlyList",{
     height: "100%",
     placeholder: "모델이 실행되지 않았습니다.",
     pagination:"local",
-    paginationSize:30,
+    paginationSize:10,
     paginationSizeSelector:[10,30,50,100],
     columns: [
         {title: "Date", field: "date"},

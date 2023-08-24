@@ -10,6 +10,7 @@ import java.util.List;
 public class GenerateTankInputTemplate {
 
     private static String OriginFilePath = "D:\\dev_etc\\";
+//    private static String OriginFilePath = "D:\\dev_etc\\";
     private static String TemplateFilePath = "D:\\dev_etc\\tank\\templates\\";
     public static void main(String[] args){
         String originFileName = "dc0790";
@@ -26,7 +27,7 @@ public class GenerateTankInputTemplate {
             int idx = 0;
 
             while(idx<28){
-                if(idx == 0) fileName = lines.get(idx).trim() + "_parameter";
+                if(idx == 0) fileName = lines.get(idx).trim() + "_param";
 
                 if(idx == 2){
                     templateContent.append("$${StartDate}          $${EndDate}").append("\n");

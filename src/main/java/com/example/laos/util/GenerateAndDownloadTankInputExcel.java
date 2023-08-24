@@ -14,7 +14,8 @@ import java.nio.file.Paths;
 
 public class GenerateAndDownloadTankInputExcel {
 
-    public static String FilePath = "C:\\Users\\jbt\\Downloads\\file";
+    public static String FilePath = "D:\\dev_etc\\tank\\newfile";
+//    public static String FilePath = "D:\\dev_etc\\tank\\NN2023";
 
     public static void generateAndDownloadExcel(HttpServletResponse response)  {
         try (
@@ -36,6 +37,7 @@ public class GenerateAndDownloadTankInputExcel {
 
             int n = 0;
             while ((line = reader.readLine()) != null) {
+                System.out.println(line);
                 n++;
                 if(n == 29) startParsing = true;
                 if(startParsing){

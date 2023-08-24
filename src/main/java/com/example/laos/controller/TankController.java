@@ -48,18 +48,22 @@ public class TankController {
 
     @PostMapping("/runTank")
     public EstimateSummaryVo runTank(@RequestBody MultipartFile file) {
-//    public String runTank(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 // 업로드된 파일 처리 로직 작성
-
                 // 입력 파일 생성용 빌더
                 StringBuilder tankContent = new StringBuilder();
                 
                 // 파라미터 파일 읽기
-                String tmplPath = TemplateFilePath + "dc0790_parameter";
+                String tmplPath = TemplateFilePath + "dc0790_param";
+//                String tmplPath = TemplateFilePath + "NN2023_param";
                 Path path = Paths.get(tmplPath);
-                String fileName = path.getFileName().toString().split("_")[0];
+                String fileName;
+
+                try (BufferedReader reader = new BufferedReader(new FileReader(tmplPath))) {
+                    fileName = reader.readLine();
+                }
+                System.out.println("Read filename:" + fileName);
 
                 // 엑셀 파일 읽기
                 List<List<String>> excelData = readExcel(file.getInputStream());
@@ -68,14 +72,11 @@ public class TankController {
                 String startDate = excelData.get(1).get(0);
                 String endDate = excelData.get(excelData.size() - 1).get(0);
 
-                System.out.println();
-                System.out.println(startDate + "            " + endDate);
-                System.out.println();
                 List<String> lines = Files.readAllLines(path);
                 int idx = 0;
                 while(idx<lines.size()){
                     if (lines.get(idx).contains("$${StartDate}")) {
-                        lines.set(idx, lines.get(idx).replace("$${StartDate}", formatDate(startDate))); // 수정된 부분
+                        lines.set(idx, lines.get(idx).replace("$${StartDate}", formatDate(startDate)));
                     }
                     if (lines.get(idx).contains("$${EndDate}")) {
                         lines.set(idx, lines.get(idx).replace("$${EndDate}", formatDate(endDate)));
@@ -89,16 +90,8 @@ public class TankController {
                     tankContent.append(formatData(String.valueOf(excelData.get(i)))).append("\n");
                 }
 
-//                int lineCount=0;
-//                for(List<String> str : excelData){
-//                    if(lineCount>0){
-//                        tankContent.append(str);
-//                    }
-//                    lineCount++;
-//                }
-
                 // 새 파일 생성 및 내용 작성
-                String newFilePath = "D:/dev_etc/tank/" + fileName;
+                String newFilePath = "D:\\dev_etc\\tank\\" + fileName;
                 try (FileWriter writer = new FileWriter(newFilePath)) {
                     writer.write(tankContent.toString());
                 } catch (IOException e) {
@@ -110,7 +103,7 @@ public class TankController {
 
                 builder.directory(new File("D:\\dev_etc\\tank\\"));
                 builder.redirectError(ProcessBuilder.Redirect.INHERIT);
-                //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+                builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
                 Process proc = builder.start();
 
@@ -121,7 +114,7 @@ public class TankController {
 
                 int procResult = proc.waitFor();
 
-                readEstimateInflowModelResult(fileName);
+//                readEstimateInflowModelResult(fileName);
 
                 if(procResult == 0) { //성공
                     System.out.println("Model execution successful.");
@@ -132,7 +125,6 @@ public class TankController {
                 // 모델 결과 파일 읽어오기
                 EstimateSummaryVo es = readEstimateInflowModelResult(fileName);
 
-//              안된다고 했음 확인해보기.
 //                // 모델 실행이 완료될 때까지 대기 (필요에 따라 적절한 대기 시간 설정)
 //                if (!proc.waitFor(1, TimeUnit.MINUTES)) {
 //                    // 실행이 1분 안에 완료되지 않으면 timeout 처리
@@ -148,7 +140,6 @@ public class TankController {
 //                    System.out.println("Model execution failed with exit code: " + procResult);
 //                }
 
-//                ArrayList<TankResultData> simulationData = readSimulationReport("D:\\dev_etc\\", fileName);
                 // 처리 완료 후 리턴
                 return es;
 //                return "success"; // 성공한 경우 success 페이지를 반환하거나 다른 작업 수행
@@ -221,13 +212,12 @@ public class TankController {
 
             while (idx< lines.size()) {
                 String[] ls = lines.get(idx).replaceAll("\\s\\s+", "Q").split("Q");
-
                 EstimateInflowVo eif = new EstimateInflowVo();
 
                 eif.setDate(ls[0].replaceAll("\\s+", ""));
-                eif.setRMm(ls[1]);
-                eif.setQoCms(ls[2]);
-                eif.setQsCms(ls[3]);
+                eif.setRMm(ls[1].equals("**********") ? "0.0" : ls[1] );
+                eif.setQoCms(ls[2].startsWith("*****") ? "0.0" : ls[2]);
+                eif.setQsCms(ls[3].startsWith("*****") ? "0.0" : ls[3]);
 
                 eilist.add(eif);
                 idx++;
@@ -238,17 +228,21 @@ public class TankController {
                 }
             }
 
-            es.setRealRainfall(lines.get(idx++).trim().split("=")[1].trim());
-            es.setObservedFlowDept(lines.get(idx++).trim().split("=")[1].trim());
-            es.setComputedFlowDept(lines.get(idx++).trim().split("=")[1].trim());
-            es.setEvapotranspiration(lines.get(idx++).trim().split("=")[1].trim());
-            es.setRatio(lines.get(idx++).trim().split("=")[1].trim());
+            System.out.println(idx);
+            es.setRealRainfall(lines.get(idx).trim().split("=")[1].startsWith("*****") ? "0.00" : lines.get(idx).trim().split("=")[1].trim());
+            es.setObservedFlowDept(lines.get(idx+1).trim().split("=")[1].startsWith("*****") ? "0.00" : lines.get(idx+1).trim().split("=")[1].trim());
+            es.setComputedFlowDept(lines.get(idx+2).trim().split("=")[1].startsWith("*****") ? "0.00" : lines.get(idx+2).trim().split("=")[1].trim());
+            es.setEvapotranspiration(lines.get(idx+3).trim().split("=")[1].startsWith("*****") ? "0.00" : lines.get(idx+3).trim().split("=")[1].trim());
 
-            idx += 26;
-            es.setObsMean(lines.get(idx++).trim().split("=")[1].trim());
-            es.setObsSdev(lines.get(idx++).trim().split("=")[1].trim());
-            es.setSimMean(lines.get(idx++).trim().split("=")[1].trim());
-            es.setSimSdev(lines.get(idx).trim().split("=")[1].trim());
+            // ratio 값이 Obs. Ratio /  Com. Ratio 두 개로 분리
+            // Obs. Ratio = 0.00 -> Com. Ratio 사용
+            es.setRatio(lines.get(idx+6).trim().split("=")[1].trim().startsWith("*****") ? "0.00" : lines.get(idx+6).trim().split("=")[1].trim());
+
+            idx += 33;
+            es.setObsMean(lines.get(idx).trim().split("=")[1].startsWith("*****") ? "0.000" : lines.get(idx++).trim().split("=")[1].trim());
+            es.setObsSdev(lines.get(idx).trim().split("=")[1].startsWith("*****") ? "0.000" : lines.get(idx++).trim().split("=")[1].trim());
+            es.setSimMean(lines.get(idx).trim().split("=")[1].startsWith("*****") ? "0.000" : lines.get(idx++).trim().split("=")[1].trim());
+            es.setSimSdev(lines.get(idx).trim().split("=")[1].trim().startsWith("*****") ? "0.000" : lines.get(idx).split("=")[1].trim());
 
             es.setInflows(eilist);
 
