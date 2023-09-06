@@ -1,6 +1,7 @@
-package com.example.laos.service;
+package com.example.laos.service.impl;
 
 import com.example.laos.dao.CommonDao;
+import com.example.laos.service.CommonService;
 import com.example.laos.vo.TankBasicInputData;
 import com.example.laos.vo.TankInputData;
 import com.example.laos.vo.TankResultData;

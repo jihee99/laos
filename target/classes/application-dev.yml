@@ -1,0 +1,37 @@
+server:
+  port: 8880
+  servlet:
+    context-path: /
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
+    mvc:
+      static-path-pattern: /static/**
+
+mybatis:
+  mapper-locations: /mappers/*.xml, /mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+
+model:
+  tank:
+    ResultPath: D:/dev_etc/laos/
+    TemplateFilePath: D:/dev_etc/laos/tank/templates/
+    ModelPath: D:/dev_etc/laos/tank/SMTankSim.exe
+  fard:
+    dir: C:\HY\laos\DMH
+    folders: Evaporation,Rainfall,Water Level
