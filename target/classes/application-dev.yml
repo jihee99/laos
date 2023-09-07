@@ -32,6 +32,6 @@ model:
     ResultPath: D:/dev_etc/laos/
     TemplateFilePath: D:/dev_etc/laos/tank/templates/
     ModelPath: D:/dev_etc/laos/tank/SMTankSim.exe
-  fard:
-    dir: C:\HY\laos\DMH
+  dmh:
+    dir: D:\SON\2023\00.DATA\dmh\
     folders: Evaporation,Rainfall,Water Level
