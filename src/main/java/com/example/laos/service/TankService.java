@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.laos.vo.EstimateSummaryVo;
 
 public interface TankService {
-	void GenerateAndDownloadTankInputExcel(HttpServletResponse response);
+
+	void generateBasinParameterTemplate(String basinName);
+
+	void generateAndDownloadTankInputExcel(HttpServletResponse response);
 
 	void downloadExcelFile(HttpServletResponse response, String excelPath);
 

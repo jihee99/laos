@@ -9,11 +9,11 @@ import java.util.List;
 
 public class GenerateTankInputTemplate {
 
-    private static String OriginFilePath = "D:\\dev_etc\\";
+    private static String OriginFilePath = "D:\\dev_etc\\laos\\";
 //    private static String OriginFilePath = "D:\\dev_etc\\";
-    private static String TemplateFilePath = "D:\\dev_etc\\tank\\templates\\";
+    private static String TemplateFilePath = "D:\\dev_etc\\laos\\tank\\templates\\";
     public static void main(String[] args){
-        String originFileName = "dc0790";
+        String originFileName = "nnsim";
 
         Path path = Paths.get(OriginFilePath,"tank", originFileName);
 

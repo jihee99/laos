@@ -9,6 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class RoutingController {
+	@GetMapping("/")
+	public ModelAndView indexPage() {
+		ModelAndView modelAndView = new ModelAndView("index");
+		return modelAndView;
+	}
+
 	@GetMapping("/tank")
 	public ModelAndView tankPage() {
 		ModelAndView modelAndView = new ModelAndView("tank");

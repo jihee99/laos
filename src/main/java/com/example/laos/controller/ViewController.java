@@ -1,19 +1,5 @@
 package com.example.laos.controller;
 
-import com.example.laos.service.CommonService;
-import com.example.laos.util.CreateFardInpfileData;
-import com.example.laos.util.CreateInputDataFile;
-import com.example.laos.util.ReadFardResultData;
-import com.example.laos.vo.TankBasicInputData;
-import com.example.laos.vo.TankInputData;
-import com.example.laos.vo.TankResultData;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +15,25 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.laos.service.CommonService;
+import com.example.laos.util.CreateFardInpfileData;
+import com.example.laos.util.CreateInputDataFile;
+import com.example.laos.vo.TankBasicInputData;
+import com.example.laos.vo.TankInputData;
+import com.example.laos.vo.TankResultData;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +41,7 @@ public class ViewController {
 
     private final CommonService commonService;
 
+    //--- fard start
     @GetMapping("/download/{selectedValue}")
     public ResponseEntity<byte[]> downloadFile(
             @PathVariable(value="selectedValue", required = true) String code
@@ -152,80 +158,7 @@ public class ViewController {
 
         String modelPath = "D:\\dev_etc\\fard\\Main_Fard.exe";
 
-        try {
-            // 모델 실행
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", modelPath);
 
-            builder.directory(new File("D:\\dev_etc\\fard\\"));
-            builder.redirectError(ProcessBuilder.Redirect.INHERIT);
-            //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-
-            Process proc = builder.start();
-
-            PrintWriter writer = new PrintWriter(proc.getOutputStream());
-            writer.write(fileName + "\n");
-
-            writer.flush();
-            writer.close();
-
-//            // 모델 실행이 완료될 때까지 대기 (필요에 따라 적절한 대기 시간 설정)
-//            if (!proc.waitFor(1, TimeUnit.MINUTES)) {
-//                // 실행이 1분 안에 완료되지 않으면 timeout 처리
-//                proc.destroy();
-//                throw new RuntimeException("Model execution timeout.");
-//            }
-
-            // 모델 실행이 성공적으로 종료되었는지 확인
-//            int procResult = proc.exitValue();
-//            if (procResult == 0) {
-//                System.out.println("Model execution successful.");
-//            } else {
-//                System.out.println("Model execution failed with exit code: " + procResult);
-//            }
-//            int procResult = proc.waitFor();
-//            if(procResult == 0) { //성공
-//                System.out.println("S");
-//            } else {
-//                System.out.println("F");
-//
-
-            String resultFileName = "(OUT)QUANTILE.DAT";
-            String resultFilePath = "D:\\dev_etc\\fard\\Result\\" + resultFileName;
-
-            boolean resultFileExists = checkFileExists(resultFilePath);
-//            boolean processCompleted = proc.waitFor(1, TimeUnit.MINUTES);
-
-            if (resultFileExists) {
-                ReadFardResultData.readFardResultData("D:\\dev_etc\\fard\\", "(OUT)QUANTILE");
-                // 모델의 표준 출력 스트림으로부터 출력을 읽어옵니다
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-//                String line;
-//                while ((line = reader.readLine()) != null) {
-//                    System.out.println(line);
-//                    // 필요에 따라 모델 출력을 처리할 수 있습니다
-//                }
-//                reader.close();
-
-                // 모델 실행 종료값을 확인하여 성공적으로 실행되었는지 판단합니다
-//                int exitValue = proc.exitValue();
-//                if (exitValue == 0) {
-//                    System.out.println("모델 실행 성공.");
-////                    ReadFardResultData.readFardResultData("D:\\dev_etc\\fard\\", "(OUT)QUANTILE");
-//                } else {
-//                    System.out.println("모델 실행 실패, 종료 코드: " + exitValue);
-//                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//                }
-                System.out.println("모델 실행 성공.");
-            } else {
-                // 지정된 타임아웃 내  프로세스가 완료되지 않았을 경우
-                System.out.println("모델 실행 타임아웃.");
-                proc.destroy();
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
 //        catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -238,7 +171,7 @@ public class ViewController {
         File file = new File(filePath);
         return file.exists() && !file.isDirectory();
     }
-
+    //--- fard end
 
     public ArrayList<TankResultData> readSimulationReport(String filePath,String code) throws IOException {
         try {

@@ -1,9 +1,17 @@
 package com.example.laos.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.laos.service.CommonService;
+import com.example.laos.service.FardService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/fard")
 public class FardController {
 
-	private final CommonService commonService;
+	private final FardService fardService;
 
-	// @GetMapping("/download/{selectedValue}")
-	// public ResponseEntity<byte[]> downloadFile(
-	// 	@PathVariable(value="selectedValue", required = true) String code
-	// ) throws IOException {
-	//
-	// 	Map<String, Object> data = commonService.getTankInputData(code);
-	//
-	// }
+	@GetMapping("/run")
+	public ResponseEntity<Object> downloadFile(HttpServletResponse response) throws IOException {
+
+		ArrayList<Map<String,Object>> list = fardService.getFardInputDataList();
+		String fileName = fardService.refiningFardInputData(list);
+		fardService.executeFardModel(fileName);
+		return null;
+	}
+
 }
