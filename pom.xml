@@ -132,6 +132,16 @@
             <version>20210307</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.dhatim</groupId>
+            <artifactId>fastexcel</artifactId>
+            <version>0.16.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dhatim</groupId>
+            <artifactId>fastexcel-reader</artifactId>
+            <version>0.16.4</version>
+        </dependency>
 
     </dependencies>
 
