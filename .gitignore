@@ -21,6 +21,11 @@ target/
 
 # .gitignore 파일 내용
 mvnw.cmd
+modeltest.git/
+
+
+# .gitignore 파일 내용
+mvnw.cmd
 *.log
 
 ### NetBeans ###
